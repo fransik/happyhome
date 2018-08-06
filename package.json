@@ -1,0 +1,28 @@
+{
+  "name": "happyhome",
+  "version": "1.0.0",
+  "description": "An application made for my lovely housemates",
+  "scripts": {
+    "start": "node backend/index.js",
+    "dev": "nodemon --watch backend backend/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "reactjs",
+    "express",
+    "api"
+  ],
+  "author": "Frans Heeremans",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.3.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "nodemon": "^1.18.3",
+    "prettier": "1.14.0"
+  },
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}

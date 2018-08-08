@@ -3,12 +3,14 @@ const bodyParser = require('body-parser');
 
 const apiRoutes = require('./routes');
 const { database } = require('./storage');
+const { errorHandler } = require('./error');
 
 const port = process.env.PORT || 3000;
 const app = express();
 
 app.use('/api', bodyParser.json());
 app.use('/api', apiRoutes);
+app.use(errorHandler);
 
 /* eslint-disable no-console */
 app.listen(port, async () => {

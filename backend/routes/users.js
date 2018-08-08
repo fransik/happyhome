@@ -1,12 +1,22 @@
 const users = require('../services/users');
 
-async function listAll(req, res) {
+async function create(req, res, next) {
+  const { body } = req;
+  try {
+    const user = await users.create(body);
+    res.json(user);
+  } catch (e) {
+    next(e);
+  }
+}
+
+async function listAll(req, res, next) {
   try {
     const userList = await users.listAll();
     res.json(userList);
   } catch (e) {
-    res.status(400).json();
+    next(e);
   }
 }
 
-module.exports = { listAll };
+module.exports = { create, listAll };

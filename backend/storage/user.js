@@ -1,5 +1,14 @@
+const bcrypt = require('bcryptjs');
+
+async function encryptPassword(user) {
+  if (user.changed('password')) {
+    const salt = await bcrypt.genSalt();
+    user.password = await bcrypt.hash(user.password, salt);
+  }
+}
+
 module.exports = (database, Sequelize) => {
-  const User = database.define('user', {
+  const userSchema = {
     email: {
       type: Sequelize.STRING(191),
       allowNull: false,
@@ -14,7 +23,13 @@ module.exports = (database, Sequelize) => {
       allowNull: false,
       defaultValue: true
     }
-  });
+  };
+  const userOptions = {
+    hooks: {
+      beforeSave: encryptPassword
+    }
+  };
+  const User = database.define('user', userSchema, userOptions);
 
   return User;
 };

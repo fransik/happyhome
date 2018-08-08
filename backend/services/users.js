@@ -2,7 +2,7 @@ const { User } = require('../storage');
 const { ValidationError } = require('../error');
 
 async function create(data) {
-  const [user, created] = await User.findOrCreate({
+  const [userObj, created] = await User.findOrCreate({
     where: { email: data.email },
     defaults: data
   });
@@ -11,6 +11,7 @@ async function create(data) {
     throw new ValidationError('Email address already in use.');
   }
 
+  const user = userObj.get();
   delete user.password;
 
   return { user };

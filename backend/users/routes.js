@@ -1,4 +1,4 @@
-const users = require('../services/users');
+const users = require('./controller');
 
 async function create(req, res, next) {
   const { body } = req;

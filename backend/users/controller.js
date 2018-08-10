@@ -1,4 +1,4 @@
-const { User } = require('../storage');
+const { User } = require('../database');
 const { ValidationError } = require('../error');
 
 async function create(data) {

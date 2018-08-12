@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const apiRoutes = require('./router');
 const { database } = require('./database');
@@ -8,7 +7,6 @@ const { errorHandler } = require('./error');
 const port = process.env.PORT || 3000;
 const app = express();
 
-app.use('/api', bodyParser.json());
 app.use('/api', apiRoutes);
 app.use(errorHandler);
 

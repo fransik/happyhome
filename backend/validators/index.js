@@ -8,6 +8,7 @@ module.exports = (toValidate, schema) => {
   });
 
   if (error) {
+    error.details.map(err => delete err.context);
     throw new ValidationError(error.details);
   }
 

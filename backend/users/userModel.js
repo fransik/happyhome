@@ -8,28 +8,28 @@ async function encryptPassword(user) {
 }
 
 module.exports = (database, Sequelize) => {
-  const userSchema = {
-    email: {
-      type: Sequelize.STRING(191),
-      allowNull: false,
-      unique: true
+  return database.define(
+    'user',
+    {
+      email: {
+        type: Sequelize.STRING(191),
+        allowNull: false,
+        unique: true
+      },
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      active: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+      }
     },
-    password: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
-    active: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false,
-      defaultValue: true
+    {
+      hooks: {
+        beforeSave: encryptPassword
+      }
     }
-  };
-  const userOptions = {
-    hooks: {
-      beforeSave: encryptPassword
-    }
-  };
-  const User = database.define('user', userSchema, userOptions);
-
-  return User;
+  );
 };

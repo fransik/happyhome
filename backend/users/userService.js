@@ -1,5 +1,5 @@
 const { User } = require('../database');
-const { ValidationError } = require('../error');
+const { AlreadyExistsError } = require('../error');
 
 async function create(data) {
   const [userObj, created] = await User.findOrCreate({
@@ -8,7 +8,7 @@ async function create(data) {
   });
 
   if (!created) {
-    throw new ValidationError('Email address already in use.');
+    throw new AlreadyExistsError('Email address already in use');
   }
 
   const user = userObj.get();

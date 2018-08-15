@@ -1,6 +1,6 @@
 const { Strategy } = require('passport-local');
 
-const { findByCredentials } = require('../users/userService');
+const { findByCredentials } = require('../users/user.service');
 
 module.exports = new Strategy(
   { usernameField: 'email' },

@@ -9,7 +9,7 @@ const database = new Sequelize(
   config.db.sequelize
 );
 
-const User = require('./users/userModel')(database, Sequelize);
+const User = require('./users/user.model')(database, Sequelize);
 const Session = require('./auth/session.model')(database, Sequelize);
 
 User.hasMany(Session, { onDelete: 'CASCADE' });

@@ -1,7 +1,7 @@
 const express = require('express');
 
-const userService = require('./userService');
-const { requiredUserSchema } = require('./userSchema');
+const userService = require('./user.service');
+const { requiredUserSchema } = require('./user.schema');
 const validate = require('../validators');
 const { needsAuth } = require('../auth');
 

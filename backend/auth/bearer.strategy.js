@@ -1,6 +1,6 @@
 const { Strategy } = require('passport-http-bearer');
 
-const { findByToken } = require('../users/userService');
+const { findByToken } = require('../users/user.service');
 
 module.exports = new Strategy(async (token, done) => {
   try {

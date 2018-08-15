@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 const authProvider = require('./auth');
 const authController = require('./auth/auth.controller');
-const userController = require('./users/userController');
+const userController = require('./users/user.controller');
 
 const router = express.Router();
 

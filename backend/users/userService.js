@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 
-const { User } = require('../database');
+const { User, Session } = require('../database');
 const { AlreadyExistsError } = require('../error');
 
 async function create(data) {
@@ -25,7 +25,7 @@ async function listAll() {
 }
 
 function findByEmail(email) {
-  return User.findOne({ where: { email } });
+  return User.findOne({ where: { email, active: true } });
 }
 
 async function findByCredentials(email, password) {
@@ -42,4 +42,24 @@ async function findByCredentials(email, password) {
   }
 }
 
-module.exports = { create, listAll, findByCredentials };
+async function findByToken(token) {
+  // TODO: improve this query and check if user is active
+  const userObj = await User.findOne({
+    attributes: { exclude: ['password'] },
+    include: [{ model: Session, where: { accessToken: token } }]
+  });
+
+  if (userObj) {
+    const user = userObj.get();
+    delete user.sessions;
+
+    return user;
+  }
+}
+
+module.exports = {
+  create,
+  listAll,
+  findByCredentials,
+  findByToken
+};

@@ -3,6 +3,7 @@ const express = require('express');
 const userService = require('./userService');
 const { requiredUserSchema } = require('./userSchema');
 const validate = require('../validators');
+const { needsAuth } = require('../auth');
 
 const router = express.Router();
 
@@ -13,6 +14,10 @@ router.get('/', async (req, res, next) => {
   } catch (e) {
     next(e);
   }
+});
+
+router.get('/me', needsAuth(), (req, res) => {
+  res.json(req.user);
 });
 
 router.post('/', async (req, res, next) => {

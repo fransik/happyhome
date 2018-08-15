@@ -16,7 +16,7 @@ async function create(data) {
   const user = userObj.get();
   delete user.password;
 
-  return { user };
+  return user;
 }
 
 async function listAll() {
@@ -43,10 +43,17 @@ async function findByCredentials(email, password) {
 }
 
 async function findByToken(token) {
-  // TODO: improve this query and check if user is active
+  // TODO: improve this query
   const userObj = await User.findOne({
     attributes: { exclude: ['password'] },
-    include: [{ model: Session, where: { accessToken: token } }]
+    where: { active: true },
+    include: [
+      {
+        model: Session,
+        attributes: ['accessToken'],
+        where: { accessToken: token }
+      }
+    ]
   });
 
   if (userObj) {

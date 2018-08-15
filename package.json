@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "An application made for my lovely housemates",
   "scripts": {
-    "start": "node backend/index.js",
-    "dev": "nodemon --watch backend backend/index.js",
+    "start": "./backend/bin/www",
+    "dev": "nodemon --watch backend backend/bin/www",
     "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

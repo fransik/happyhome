@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 const { User } = require('../database');
 const { AlreadyExistsError } = require('../error');
 
@@ -22,4 +24,22 @@ async function listAll() {
   return { users };
 }
 
-module.exports = { create, listAll };
+function findByEmail(email) {
+  return User.findOne({ where: { email } });
+}
+
+async function findByCredentials(email, password) {
+  const userObj = await findByEmail(email);
+
+  if (userObj) {
+    const user = userObj.get();
+    const correctPassword = await bcrypt.compare(password, user.password);
+    delete user.password;
+
+    if (correctPassword) {
+      return user;
+    }
+  }
+}
+
+module.exports = { create, listAll, findByCredentials };

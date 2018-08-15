@@ -10,5 +10,8 @@ const database = new Sequelize(
 );
 
 const User = require('./users/userModel')(database, Sequelize);
+const Session = require('./auth/session.model')(database, Sequelize);
 
-module.exports = { database, User };
+User.hasMany(Session, { onDelete: 'CASCADE' });
+
+module.exports = { database, User, Session };

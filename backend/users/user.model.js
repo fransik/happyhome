@@ -2,8 +2,7 @@ const bcrypt = require('bcryptjs');
 
 async function encryptPassword(user) {
   if (user.changed('password')) {
-    const salt = await bcrypt.genSalt();
-    user.password = await bcrypt.hash(user.password, salt);
+    user.password = await bcrypt.hash(user.password(), 12);
   }
 }
 
@@ -18,7 +17,10 @@ module.exports = (database, Sequelize) => {
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        get() {
+          return () => this.getDataValue('password');
+        }
       },
       active: {
         type: Sequelize.BOOLEAN,

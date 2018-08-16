@@ -4,7 +4,7 @@ const { User, Session } = require('../database');
 const { AlreadyExistsError } = require('../error');
 
 async function create(data) {
-  const [userObj, created] = await User.findOrCreate({
+  const [user, created] = await User.findOrCreate({
     where: { email: data.email },
     defaults: data
   });
@@ -13,14 +13,11 @@ async function create(data) {
     throw new AlreadyExistsError('Email address already in use');
   }
 
-  const user = userObj.get();
-  delete user.password;
-
   return user;
 }
 
 async function listAll() {
-  const users = await User.findAll({ attributes: { exclude: ['password'] } });
+  const users = await User.findAll();
   return { users };
 }
 
@@ -29,12 +26,10 @@ function findByEmail(email) {
 }
 
 async function findByCredentials(email, password) {
-  const userObj = await findByEmail(email);
+  const user = await findByEmail(email);
 
-  if (userObj) {
-    const user = userObj.get();
-    const correctPassword = await bcrypt.compare(password, user.password);
-    delete user.password;
+  if (user) {
+    const correctPassword = await bcrypt.compare(password, user.password());
 
     if (correctPassword) {
       return user;
@@ -45,7 +40,6 @@ async function findByCredentials(email, password) {
 async function findByToken(token) {
   // TODO: improve this query
   const userObj = await User.findOne({
-    attributes: { exclude: ['password'] },
     where: { active: true },
     include: [
       {

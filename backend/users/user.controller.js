@@ -22,8 +22,8 @@ router.get('/me', needsAuth(), (req, res) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const valid = validate(req.body, requiredUserSchema);
-    const user = await userService.create(valid);
+    const validBody = validate(req.body, requiredUserSchema);
+    const user = await userService.create(validBody);
     res.status(201).json(user);
   } catch (e) {
     next(e);

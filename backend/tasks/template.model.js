@@ -1,7 +1,7 @@
 module.exports = (database, Sequelize) => {
   return database.define('tasktemplate', {
     name: {
-      type: Sequelize.STRING(125),
+      type: Sequelize.STRING(191),
       allowNull: false,
       unique: true
     },

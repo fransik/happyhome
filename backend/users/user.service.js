@@ -16,9 +16,8 @@ async function create(data) {
   return user;
 }
 
-async function listAll() {
-  const users = await User.findAll();
-  return { users };
+function listAll() {
+  return User.findAll();
 }
 
 function findByEmail(email) {

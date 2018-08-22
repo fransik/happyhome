@@ -1,13 +1,16 @@
 const moment = require('moment');
 
-const { Rota, Task, TaskTemplate, User } = require('../database');
+const { database, Rota, Task, TaskTemplate, User } = require('../database');
 
 async function create() {
   const rotaData = await getStartAndEndDate();
-  const rota = await Rota.create(rotaData);
-  await generateRota(rota.get().id);
 
-  return rota;
+  return database.transaction(async transaction => {
+    const rota = await Rota.create(rotaData, { transaction });
+    await generateRota(rota.get().id, { transaction });
+
+    return rota;
+  });
 }
 
 async function getStartAndEndDate() {
@@ -29,7 +32,7 @@ async function getStartAndEndDate() {
   return { startsAt, endsAt };
 }
 
-async function generateRota(rotaId) {
+async function generateRota(rotaId, dbTransaction) {
   const queryOptions = { attributes: ['id'], where: { active: true } };
   const [templates, users] = await Promise.all([
     TaskTemplate.findAll(queryOptions),
@@ -39,11 +42,10 @@ async function generateRota(rotaId) {
   return Promise.all(
     templates.map((template, index) => {
       const rotation = (index + rotaId) % users.length;
-      return Task.create({
-        rotaId,
-        userId: users[rotation].get().id,
-        tasktemplateId: template.get().id
-      });
+      const userId = users[rotation].get().id;
+      const tasktemplateId = template.get().id;
+
+      return Task.create({ rotaId, userId, tasktemplateId }, dbTransaction);
     })
   );
 }

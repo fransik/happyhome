@@ -3,15 +3,14 @@ const moment = require('moment');
 const { Rota } = require('../database');
 
 async function create() {
-  const rotaCount = await Rota.count();
-  const rotaData = await getStartAndEndDate(rotaCount);
-
+  const rotaData = await getStartAndEndDate();
   const rota = await Rota.create(rotaData);
 
   return rota;
 }
 
-async function getStartAndEndDate(rotaCount) {
+async function getStartAndEndDate() {
+  const rotaCount = await Rota.count();
   let startsAt;
   let endsAt;
 
@@ -20,8 +19,8 @@ async function getStartAndEndDate(rotaCount) {
       .startOf('isoWeek')
       .add(1, 'weeks');
   } else {
-    const latestRota = await Rota.findAll({ limit: 1, order: 'id DESC' });
-    startsAt = moment(latestRota[0].endsAt).add(1, 'days');
+    const lastRota = await Rota.findAll({ limit: 1, order: [['id', 'DESC']] });
+    startsAt = moment(lastRota[0].endsAt).add(1, 'days');
   }
 
   endsAt = startsAt.clone().add(6, 'days');

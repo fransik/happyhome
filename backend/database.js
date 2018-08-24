@@ -19,7 +19,7 @@ User.hasMany(Session, { onDelete: 'CASCADE' });
 User.hasMany(Task);
 TaskTemplate.hasMany(Task);
 Rota.hasMany(Task);
-Task.belongsTo(TaskTemplate);
+Task.belongsTo(TaskTemplate, { foreignKey: 'tasktemplateId', as: 'details' });
 Task.belongsTo(User);
 Task.belongsTo(Rota);
 

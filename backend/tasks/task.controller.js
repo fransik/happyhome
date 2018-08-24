@@ -1,10 +1,21 @@
 const express = require('express');
 
+const taskService = require('./task.service');
 const templateService = require('./template.service');
 const { requiredTemplateSchema } = require('./template.schema');
 const validate = require('../validators');
+const { needsAuth } = require('../auth');
 
 const router = express.Router();
+
+router.get('/upcoming', needsAuth(), async (req, res, next) => {
+  try {
+    const taskList = await taskService.listUpcoming(req.user.id);
+    res.json(taskList);
+  } catch (e) {
+    next(e);
+  }
+});
 
 router.get('/templates', async (req, res, next) => {
   try {

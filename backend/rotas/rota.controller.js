@@ -3,8 +3,18 @@ const express = require('express');
 const rotaService = require('./rota.service');
 const rotaSchema = require('./rota.schema');
 const validate = require('../validators');
+const { needsAuth } = require('../auth');
 
 const router = express.Router();
+
+router.get('/upcoming', needsAuth(), async (req, res, next) => {
+  try {
+    const rotaList = await rotaService.listUpcoming(req.user.id);
+    res.json(rotaList);
+  } catch (e) {
+    next(e);
+  }
+});
 
 router.post('/', async (req, res, next) => {
   try {

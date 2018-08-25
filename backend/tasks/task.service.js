@@ -1,33 +1,22 @@
-const moment = require('moment');
+const { Task } = require('../database');
 
-const { database, Task, TaskTemplate, Rota } = require('../database');
+async function update(id, userId, data) {
+  const task = await Task.findOne({ where: { id, userId } });
 
-function listUpcoming(userId) {
-  const { Op } = database;
-  const start = moment().startOf('month');
-  const end = moment().endOf('month');
-  const dateFmt = 'YYYY-MM-DD';
+  if (!task) {
+    // TODO: change to propper error
+    throw new Error('Resource not found');
+  }
 
-  return Rota.findAll({
-    attributes: ['id', 'startsAt', 'endsAt'],
-    where: {
-      startsAt: { [Op.between]: [start.format(dateFmt), end.format(dateFmt)] },
-      '$tasks.userId$': userId
-    },
-    include: [
-      {
-        model: Task,
-        attributes: ['id', 'completedAt'],
-        include: [
-          {
-            model: TaskTemplate,
-            as: 'details',
-            attributes: ['name', 'description']
-          }
-        ]
-      }
-    ]
-  });
+  if (data.completed === true) {
+    task.completedAt = new Date().toISOString();
+  }
+
+  if (data.completed === false) {
+    task.completedAt = null;
+  }
+
+  return task.save();
 }
 
-module.exports = { listUpcoming };
+module.exports = { update };

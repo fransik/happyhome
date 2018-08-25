@@ -1,17 +1,25 @@
 const express = require('express');
 
 const taskService = require('./task.service');
+const { requiredTaskSchema } = require('./task.schema');
 const templateService = require('./template.service');
 const { requiredTemplateSchema } = require('./template.schema');
+const idSchema = require('../validators/id.schema');
 const validate = require('../validators');
 const { needsAuth } = require('../auth');
 
 const router = express.Router();
 
-router.get('/upcoming', needsAuth(), async (req, res, next) => {
+router.patch('/:id', needsAuth(), async (req, res, next) => {
   try {
-    const taskList = await taskService.listUpcoming(req.user.id);
-    res.json(taskList);
+    const validId = validate({ param: req.params.id }, idSchema);
+    const validBody = validate(req.body, requiredTaskSchema);
+    const updatedTask = await taskService.update(
+      validId.param,
+      req.user.id,
+      validBody
+    );
+    res.json(updatedTask);
   } catch (e) {
     next(e);
   }

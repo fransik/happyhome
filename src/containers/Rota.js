@@ -23,12 +23,28 @@ export default class Rota extends Component {
     }
   }
 
+  handleNextWeek = () => {
+    const index = this.state.rotaIndex + 1;
+    if (index < this.state.rotas.length) {
+      this.setState({ rotaIndex: index });
+    }
+  };
+
+  handlePrevWeek = () => {
+    const index = this.state.rotaIndex - 1;
+    if (index >= 0) {
+      this.setState({ rotaIndex: index });
+    }
+  };
+
   render() {
     const { rotas } = this.state;
+    let week = null;
     let tasks = [];
     let content = <Spinner />;
 
     if (rotas.length > 0) {
+      week = rotas[this.state.rotaIndex].startsAt;
       tasks = rotas[this.state.rotaIndex].tasks;
     }
 
@@ -37,7 +53,11 @@ export default class Rota extends Component {
         <ErrorMessage />
       ) : (
         <div>
-          <WeekNav week="26" />
+          <WeekNav
+            week={week}
+            prev={this.handlePrevWeek}
+            next={this.handleNextWeek}
+          />
           <TaskList tasks={tasks} />
         </div>
       );

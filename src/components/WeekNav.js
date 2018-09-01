@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 
 import Button from './Button';
 
@@ -26,10 +27,19 @@ const WeekItem = styled.span`
   border-right: 1px solid #00c853;
 `;
 
-export default props => (
-  <Nav aria-label="Week navigation">
-    <WeekButton onClick={props.prev}>&laquo;</WeekButton>
-    <WeekItem>Week {props.week}</WeekItem>
-    <WeekButton onClick={props.next}>&raquo;</WeekButton>
-  </Nav>
-);
+const WeekNav = props => {
+  let week = '??';
+  if (props.week) {
+    week = moment(props.week).format('D MMMM');
+  }
+
+  return (
+    <Nav aria-label="Week navigation">
+      <WeekButton onClick={props.prev}>&laquo;</WeekButton>
+      <WeekItem>Week of {week}</WeekItem>
+      <WeekButton onClick={props.next}>&raquo;</WeekButton>
+    </Nav>
+  );
+};
+
+export default WeekNav;

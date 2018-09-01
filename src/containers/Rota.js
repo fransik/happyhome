@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import update from 'immutability-helper';
 
 import * as rotaService from '../services/rota';
 import WeekNav from '../components/WeekNav';
@@ -37,6 +38,24 @@ export default class Rota extends Component {
     }
   };
 
+  handleCompleteTask = async id => {
+    const { rotas, rotaIndex } = this.state;
+    const { tasks } = rotas[rotaIndex];
+
+    try {
+      const taskIndex = rotaService.findTaskIndex(id, tasks);
+      const completedAt = await rotaService.completeTask(id, tasks[taskIndex]);
+      const updatedRotas = update(this.state.rotas, {
+        [rotaIndex]: {
+          tasks: { [taskIndex]: { completedAt: { $set: completedAt } } }
+        }
+      });
+      this.setState({ rotas: updatedRotas });
+    } catch (e) {
+      this.setState({ error: true });
+    }
+  };
+
   render() {
     const { rotas } = this.state;
     let week = null;
@@ -58,7 +77,7 @@ export default class Rota extends Component {
             prev={this.handlePrevWeek}
             next={this.handleNextWeek}
           />
-          <TaskList tasks={tasks} />
+          <TaskList tasks={tasks} completeTask={this.handleCompleteTask} />
         </div>
       );
     }

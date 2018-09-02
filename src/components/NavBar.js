@@ -18,7 +18,7 @@ const NavItem = styled(NavLink)`
   }
 `;
 
-export default props => {
+const NavBar = props => {
   const { auth } = props;
   return (
     <Nav>
@@ -29,3 +29,5 @@ export default props => {
     </Nav>
   );
 };
+
+export default NavBar;

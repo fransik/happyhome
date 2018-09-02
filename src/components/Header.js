@@ -9,6 +9,7 @@ const Wrapper = styled.div`
   color: #fff;
   width: 100%;
 `;
+
 const Content = styled(Container.withComponent('header'))`
   height: 56px;
   padding: 0 1rem;
@@ -21,7 +22,7 @@ const Title = styled(H3)`
   margin: 0;
 `;
 
-export default props => (
+const Header = props => (
   <Wrapper>
     <Content>
       <Title>HappyHome</Title>
@@ -29,3 +30,5 @@ export default props => (
     </Content>
   </Wrapper>
 );
+
+export default Header;

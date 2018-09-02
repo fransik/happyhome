@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default styled.button.attrs({
+const Button = styled.button.attrs({
   type: props => props.type || 'button'
 })`
   color: #fff;
@@ -14,3 +14,5 @@ export default styled.button.attrs({
     background-color: ${props => (props.disabled ? '#bdbdbd' : '#00e676')};
   }
 `;
+
+export default Button;

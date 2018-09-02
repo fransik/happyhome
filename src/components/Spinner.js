@@ -5,7 +5,7 @@ const rotate360 = keyframes`
   to { transform: rotate(360deg); }
 `;
 
-export default styled.div`
+const Spinner = styled.div`
   &,
   &::after {
     border-radius: 50%;
@@ -23,3 +23,5 @@ export default styled.div`
   transform: translateZ(0);
   animation: ${rotate360} 1.1s infinite linear;
 `;
+
+export default Spinner;

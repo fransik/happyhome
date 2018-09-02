@@ -5,7 +5,7 @@ import Header from './Header';
 import { Container } from './Base';
 import Rota from '../containers/Rota';
 
-export default () => (
+const App = () => (
   <Fragment>
     <Header auth />
     <Container>
@@ -13,3 +13,5 @@ export default () => (
     </Container>
   </Fragment>
 );
+
+export default App;

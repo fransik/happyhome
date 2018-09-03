@@ -22,11 +22,11 @@ const Title = styled(H3)`
   margin: 0;
 `;
 
-const Header = props => (
+const Header = () => (
   <Wrapper>
     <Content>
       <Title>HappyHome</Title>
-      <NavBar auth={props.auth} />
+      <NavBar />
     </Content>
   </Wrapper>
 );

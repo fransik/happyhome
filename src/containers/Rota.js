@@ -57,14 +57,14 @@ export default class Rota extends Component {
   };
 
   render() {
-    const { rotas } = this.state;
+    const { rotas, rotaIndex } = this.state;
     let week = null;
     let tasks = [];
     let content = <Spinner />;
 
     if (rotas.length > 0) {
-      week = rotas[this.state.rotaIndex].startsAt;
-      tasks = rotas[this.state.rotaIndex].tasks;
+      week = rotas[rotaIndex].startsAt;
+      tasks = rotas[rotaIndex].tasks;
     }
 
     if (!this.state.loading) {

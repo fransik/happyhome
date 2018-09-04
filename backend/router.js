@@ -1,5 +1,6 @@
 const express = require('express');
 
+const { errorHandler } = require('./error');
 const authProvider = require('./auth');
 const authController = require('./auth/auth.controller');
 const userController = require('./users/user.controller');
@@ -14,5 +15,6 @@ router.use('/auth', authController);
 router.use('/users', userController);
 router.use('/tasks', taskController);
 router.use('/rotas', rotaController);
+router.use(errorHandler);
 
 module.exports = router;

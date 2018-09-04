@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 
 import Header from '../components/Header';
 import { Container } from '../components/Base';
+import Logout from '../components/Logout';
 import Rota from './Rota';
 import Auth from './Auth';
 
@@ -26,6 +27,7 @@ export default class App extends Component {
         <Container>
           <Route exact path="/" component={Rota} />
           <Route path="/auth" component={Auth} />
+          <Route path="/logout" component={Logout} />
         </Container>
       </AppContext.Provider>
     );

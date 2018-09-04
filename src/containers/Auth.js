@@ -48,13 +48,13 @@ class Auth extends Component {
     event.preventDefault();
 
     if (this.state.formIsValid) {
-      const formData = getFormValues(this.state.loginForm);
+      const { history, toggleAuth } = this.props;
+      const { email, password } = getFormValues(this.state.loginForm);
 
       try {
         this.setState({ loading: true });
-        await authService.loginWithEmail(formData.email, formData.password);
-        this.props.toggleAuth();
-        this.props.history.push('/');
+        await authService.loginWithEmail(email, password, toggleAuth);
+        history.push('/');
       } catch (e) {
         let errorMsg =
           'Something went wrong, please check your internet connection and try again.';

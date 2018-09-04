@@ -22,8 +22,12 @@ class Auth extends Component {
   };
 
   componentWillMount() {
+    if (authService.checkAuth()) {
+      return this.props.history.replace('/');
+    }
+
     if (this.props.auth) {
-      this.props.history.replace('/');
+      authService.logout(this.props.toggleAuth);
     }
   }
 

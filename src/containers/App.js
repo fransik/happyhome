@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
+import PrivateRoute from '../hoc/PrivateRoute';
 import Header from '../components/Header';
 import { Container } from '../components/Base';
 import Logout from '../components/Logout';
@@ -25,9 +26,11 @@ export default class App extends Component {
       <AppContext.Provider value={this.state}>
         <Header />
         <Container>
-          <Route exact path="/" component={Rota} />
-          <Route path="/auth" component={Auth} />
-          <Route path="/logout" component={Logout} />
+          <Switch>
+            <Route path="/auth" component={Auth} />
+            <PrivateRoute path="/logout" component={Logout} />
+            <PrivateRoute exact path="/" component={Rota} />
+          </Switch>
         </Container>
       </AppContext.Provider>
     );

@@ -5,7 +5,12 @@ const client = axios.create({
 });
 
 export function setAuthHeader(token) {
-  client.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+  const header = 'Bearer ' + token;
+
+  if (client.defaults.headers.common['Authorization'] !== header) {
+    client.defaults.headers.common['Authorization'] = header;
+    return;
+  }
 }
 
 export function removeAuthHeader() {

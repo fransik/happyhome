@@ -1,7 +1,8 @@
 {
   "name": "happyhome",
   "version": "1.0.0",
-  "description": "An application made for my lovely housemates",
+  "description": "The application I made for my lovely housemates.",
+  "repository": "github:fransik/happyhome",
   "private": true,
   "scripts": {
     "start": "./backend/bin/www",
@@ -19,7 +20,7 @@
     "api"
   ],
   "author": "Frans Heeremans",
-  "license": "ISC",
+  "license": "MIT",
   "proxy": {
     "/api": {
       "target": "http://localhost:3001"

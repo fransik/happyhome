@@ -11,14 +11,21 @@ import loginForm from '../schemas/loginForm';
 import * as authService from '../services/auth';
 import Login from '../components/Login';
 import Spinner from '../components/Spinner';
+import withAppContext from '../hoc/appContext';
 
-export default class Auth extends Component {
+class Auth extends Component {
   state = {
     error: false,
     loading: false,
     formIsValid: false,
     loginForm
   };
+
+  componentWillMount() {
+    if (this.props.auth) {
+      this.props.history.replace('/');
+    }
+  }
 
   handleInput = (event, id) => {
     const { value } = event.target;
@@ -46,11 +53,12 @@ export default class Auth extends Component {
       try {
         this.setState({ loading: true });
         await authService.loginWithEmail(formData.email, formData.password);
+        this.props.toggleAuth();
         this.props.history.push('/');
       } catch (e) {
         let errorMsg =
           'Something went wrong, please check your internet connection and try again.';
-        if (e.response.status === 401) {
+        if (e.response && e.response.status === 401) {
           errorMsg = 'Invalid login credentials, please try again.';
         }
         this.setState({ error: errorMsg, loading: false });
@@ -73,3 +81,5 @@ export default class Auth extends Component {
     );
   }
 }
+
+export default withAppContext(Auth);

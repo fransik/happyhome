@@ -6,11 +6,18 @@ import { Container } from '../components/Base';
 import Rota from './Rota';
 import Auth from './Auth';
 
-const defaultContext = { auth: false };
+const defaultContext = { auth: false, toggleAuth: () => {} };
 export const AppContext = React.createContext(defaultContext);
 
 export default class App extends Component {
-  state = defaultContext;
+  toggleAuth = () => {
+    this.setState(prevState => ({ auth: !prevState.auth }));
+  };
+
+  state = {
+    ...defaultContext,
+    toggleAuth: this.toggleAuth
+  };
 
   render() {
     return (

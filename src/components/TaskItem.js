@@ -7,6 +7,7 @@ import Button from './Button';
 const Wrapper = styled.div`
   text-align: left;
   background-color: #fff;
+  margin-bottom: 1rem;
   border: 1px solid #388e3c;
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;

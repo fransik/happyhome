@@ -2,12 +2,7 @@ const Sequelize = require('sequelize');
 
 const config = require('./config');
 
-const database = new Sequelize(
-  config.db.database,
-  config.db.username,
-  config.db.password,
-  config.db.sequelize
-);
+const database = new Sequelize(config.db);
 
 const User = require('./users/user.model')(database, Sequelize);
 const Session = require('./auth/session.model')(database, Sequelize);

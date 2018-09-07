@@ -2,12 +2,12 @@
 const http = require('http');
 
 const app = require('../app');
-const { database } = require('../database');
+const { migrations } = require('../database');
 
 const port = app.get('port');
 
 /* eslint-disable no-console */
 http.createServer(app).listen(port, async () => {
-  await database.sync();
+  await migrations.run();
   console.log(`API listening on port ${port}...`);
 });

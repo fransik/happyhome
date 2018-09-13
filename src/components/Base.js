@@ -38,3 +38,12 @@ export const H3 = styled.h3`
   font-size: 1.25rem;
   ${headingStyle};
 `;
+
+export const A = styled.a`
+  color: #007bff;
+  text-decoration: none;
+  &:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+`;

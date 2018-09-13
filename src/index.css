@@ -2,8 +2,14 @@
   box-sizing: border-box;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   background-color: #fafbfc;
+  margin-bottom: 42px;
 }
 
 #root {

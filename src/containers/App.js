@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import { checkAuth } from '../services/auth';
 import PrivateRoute from '../hoc/PrivateRoute';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { Container } from '../components/Base';
 import Logout from '../components/Logout';
 import Rota from './Rota';
@@ -34,6 +35,7 @@ export default class App extends Component {
             <PrivateRoute exact path="/" component={Rota} />
           </Switch>
         </Container>
+        <Footer />
       </AppContext.Provider>
     );
   }

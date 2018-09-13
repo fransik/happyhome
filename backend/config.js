@@ -8,6 +8,7 @@ module.exports = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dialect: process.env.DB_DIALECT || 'sqlite',
+    dialectOptions: { charset: 'utf8mb4' },
     storage: path.join(__dirname, 'database', 'db.sqlite'),
     operatorsAliases: false,
     // eslint-disable-next-line no-console

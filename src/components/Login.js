@@ -12,9 +12,9 @@ const Form = styled.form`
 
 const Login = props => (
   <div>
-    <H1>Welcome, please log in</H1>
+    <H1>Welcome!</H1>
     <Form onSubmit={props.handleLogin}>
-      {props.error && <p>{props.error}</p>}
+      {props.error && <p style={{ color: 'red' }}>{props.error}</p>}
       {props.elements.map(el => (
         <Input
           key={el.id}

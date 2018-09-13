@@ -16,7 +16,7 @@ router.get('/upcoming', needsAuth(), async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', needsAuth(), async (req, res, next) => {
   try {
     validate(req.body, rotaSchema);
     const rota = await rotaService.create();

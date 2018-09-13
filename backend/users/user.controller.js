@@ -7,7 +7,7 @@ const { needsAuth } = require('../auth');
 
 const router = express.Router();
 
-router.get('/', async (req, res, next) => {
+router.get('/', needsAuth(), async (req, res, next) => {
   try {
     const userList = await userService.listAll();
     res.json(userList);

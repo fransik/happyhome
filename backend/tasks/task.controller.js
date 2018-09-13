@@ -25,7 +25,7 @@ router.patch('/:id', needsAuth(), async (req, res, next) => {
   }
 });
 
-router.get('/templates', async (req, res, next) => {
+router.get('/templates', needsAuth(), async (req, res, next) => {
   try {
     const templateList = await templateService.listAll();
     res.json(templateList);
@@ -34,7 +34,7 @@ router.get('/templates', async (req, res, next) => {
   }
 });
 
-router.post('/templates', async (req, res, next) => {
+router.post('/templates', needsAuth(), async (req, res, next) => {
   try {
     const validBody = validate(req.body, requiredTemplateSchema);
     const template = await templateService.create(validBody);

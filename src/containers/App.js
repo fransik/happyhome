@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+import { checkAuth } from '../services/auth';
 import PrivateRoute from '../hoc/PrivateRoute';
 import Header from '../components/Header';
 import { Container } from '../components/Base';
@@ -18,6 +19,7 @@ export default class App extends Component {
 
   state = {
     ...defaultContext,
+    auth: checkAuth(),
     toggleAuth: this.toggleAuth
   };
 

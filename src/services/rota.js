@@ -1,8 +1,13 @@
+import moment from 'moment';
+
 import client from './api';
 
 export async function getUpcoming() {
   const res = await client.get('/rotas/upcoming');
-  return res.data;
+  const rotas = res.data;
+  const rotaIndex = findCurrentRotaIndex(rotas);
+
+  return { rotas, rotaIndex };
 }
 
 export function findTaskIndex(id, tasks) {
@@ -21,4 +26,17 @@ export async function completeTask(id, task) {
   });
 
   return res.data.completedAt;
+}
+
+function findCurrentRotaIndex(rotas) {
+  const startOfWeek = moment()
+    .startOf('isoWeek')
+    .format('YYYY-MM-DD');
+  const index = rotas.findIndex(rota => rota.startsAt === startOfWeek);
+
+  if (index >= 0) {
+    return index;
+  }
+
+  return 0;
 }

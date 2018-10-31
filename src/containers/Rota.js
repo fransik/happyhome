@@ -17,8 +17,8 @@ export default class Rota extends Component {
 
   async componentDidMount() {
     try {
-      const rotas = await rotaService.getUpcoming();
-      this.setState({ rotas, loading: false });
+      const { rotas, rotaIndex } = await rotaService.getUpcoming();
+      this.setState({ rotas, rotaIndex, loading: false });
     } catch (e) {
       this.setState({ error: true, loading: false });
     }

@@ -52,14 +52,19 @@ async function generateRota(rotaId, dbTransaction) {
 
 function listUpcoming(userId) {
   const { Op } = database;
-  const start = moment().startOf('month');
-  const end = moment().endOf('month');
+  const start = moment()
+    .startOf('isoWeek')
+    .subtract(2, 'weeks');
+  const end = moment()
+    .endOf('isoWeek')
+    .add(3, 'weeks');
   const dateFmt = 'YYYY-MM-DD';
 
   return Rota.findAll({
     attributes: ['id', 'startsAt', 'endsAt'],
     where: {
-      startsAt: { [Op.between]: [start.format(dateFmt), end.format(dateFmt)] },
+      startsAt: { [Op.gte]: start.format(dateFmt) },
+      endsAt: { [Op.lte]: end.format(dateFmt) },
       '$tasks.userId$': userId
     },
     include: [

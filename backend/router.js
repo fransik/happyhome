@@ -12,9 +12,9 @@ const router = express.Router();
 authProvider.initialize(router);
 router.use(express.json());
 router.use('/auth', authController);
-router.use('/users', userController);
-router.use('/tasks', taskController);
-router.use('/rotas', rotaController);
+router.use('/users', authProvider.needsAuth(), userController);
+router.use('/tasks', authProvider.needsAuth(), taskController);
+router.use('/rotas', authProvider.needsAuth(), rotaController);
 router.use(errorHandler);
 
 module.exports = router;

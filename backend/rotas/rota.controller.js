@@ -3,11 +3,11 @@ const express = require('express');
 const rotaService = require('./rota.service');
 const rotaSchema = require('./rota.schema');
 const validate = require('../validators');
-const { needsAuth } = require('../auth');
+const { needsAdmin } = require('../auth/auth.service');
 
 const router = express.Router();
 
-router.get('/upcoming', needsAuth(), async (req, res, next) => {
+router.get('/upcoming', async (req, res, next) => {
   try {
     const rotaList = await rotaService.listUpcoming(req.user.id);
     res.json(rotaList);
@@ -16,7 +16,7 @@ router.get('/upcoming', needsAuth(), async (req, res, next) => {
   }
 });
 
-router.post('/', needsAuth(), async (req, res, next) => {
+router.post('/', needsAdmin, async (req, res, next) => {
   try {
     validate(req.body, rotaSchema);
     const rota = await rotaService.create();

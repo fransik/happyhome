@@ -26,6 +26,11 @@ module.exports = (database, Sequelize) => {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: true
+      },
+      role: {
+        type: Sequelize.ENUM('user', 'admin'),
+        allowNull: false,
+        defaultValue: 'user'
       }
     },
     {

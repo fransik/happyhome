@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 
 const { database, Session } = require('../database');
+const { UnauthorizedError } = require('../error');
 
 function generateAsyncToken(length = 32) {
   return new Promise((resolve, reject) => {
@@ -24,4 +25,12 @@ async function generateAndStoreToken(userId) {
   return accessToken;
 }
 
-module.exports = { generateAndStoreToken };
+function needsAdmin(req, res, next) {
+  if (req.user.role === 'admin') {
+    return next();
+  }
+
+  throw new UnauthorizedError();
+}
+
+module.exports = { generateAndStoreToken, needsAdmin };

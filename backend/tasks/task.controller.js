@@ -6,11 +6,11 @@ const templateService = require('./template.service');
 const { requiredTemplateSchema } = require('./template.schema');
 const idSchema = require('../validators/id.schema');
 const validate = require('../validators');
-const { needsAuth } = require('../auth');
+const { needsAdmin } = require('../auth/auth.service');
 
 const router = express.Router();
 
-router.patch('/:id', needsAuth(), async (req, res, next) => {
+router.patch('/:id', async (req, res, next) => {
   try {
     const validId = validate({ param: req.params.id }, idSchema);
     const validBody = validate(req.body, requiredTaskSchema);
@@ -25,7 +25,7 @@ router.patch('/:id', needsAuth(), async (req, res, next) => {
   }
 });
 
-router.get('/templates', needsAuth(), async (req, res, next) => {
+router.get('/templates', async (req, res, next) => {
   try {
     const templateList = await templateService.listAll();
     res.json(templateList);
@@ -34,7 +34,7 @@ router.get('/templates', needsAuth(), async (req, res, next) => {
   }
 });
 
-router.post('/templates', needsAuth(), async (req, res, next) => {
+router.post('/templates', needsAdmin, async (req, res, next) => {
   try {
     const validBody = validate(req.body, requiredTemplateSchema);
     const template = await templateService.create(validBody);

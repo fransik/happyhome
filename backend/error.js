@@ -24,4 +24,17 @@ class AlreadyExistsError extends Error {
   }
 }
 
-module.exports = { errorHandler, ValidationError, AlreadyExistsError };
+class UnauthorizedError extends Error {
+  constructor() {
+    super("You don't have the required permissions for this action");
+    this.name = 'UnauthorizedError';
+    this.statusCode = 401;
+  }
+}
+
+module.exports = {
+  errorHandler,
+  ValidationError,
+  AlreadyExistsError,
+  UnauthorizedError
+};

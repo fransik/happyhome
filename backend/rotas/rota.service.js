@@ -83,4 +83,15 @@ function listUpcoming(userId) {
   });
 }
 
-module.exports = { create, listUpcoming };
+function rotaExistsForDate(date) {
+  const { Op } = database;
+  const formattedDate = moment(date).format('YYYY-MM-DD');
+
+  return Rota.count({
+    where: {
+      startsAt: { [Op.gte]: formattedDate }
+    }
+  });
+}
+
+module.exports = { create, listUpcoming, rotaExistsForDate };

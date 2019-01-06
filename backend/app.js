@@ -3,15 +3,17 @@ const path = require('path');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
 
-const cron = require('./cron');
+dotenv.config({
+  path: path.join(__dirname, '..', '.env')
+});
 
 const app = express();
-const envPath = path.join(__dirname, '..', '.env');
+const api = require('./router');
+const cron = require('./cron');
 
-dotenv.config({ path: envPath });
 app.set('port', process.env.PORT || 3000);
 app.use(helmet());
-app.use('/api', require('./router'));
+app.use('/api', api);
 cron.startJobs();
 
 if (process.env.NODE_ENV === 'production') {

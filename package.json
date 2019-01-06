@@ -21,17 +21,13 @@
   ],
   "author": "Frans Heeremans",
   "license": "MIT",
-  "proxy": {
-    "/api": {
-      "target": "http://localhost:3001"
-    }
-  },
   "devDependencies": {
     "axios": "^0.18.0",
     "concurrently": "^4.1.0",
     "cross-env": "^5.2.0",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-prettier": "^3.0.1",
+    "http-proxy-middleware": "^0.19.1",
     "immutability-helper": "^2.9.0",
     "nodemon": "^1.18.9",
     "normalize.css": "^8.0.1",
@@ -56,5 +52,11 @@
     "sequelize": "^4.42.0",
     "sqlite3": "^4.0.4",
     "umzug": "^2.2.0"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
